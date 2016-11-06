@@ -21,6 +21,8 @@ use Yii;
  */
 class Image extends \yii\db\ActiveRecord
 {
+    const IMAGE_DIR = '/upload/';
+
     /**
      * @inheritdoc
      */
@@ -76,5 +78,13 @@ class Image extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * @return string Full path to image
+     */
+    public function getPath()
+    {
+        return self::IMAGE_DIR . $this->name;
     }
 }
