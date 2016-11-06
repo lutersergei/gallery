@@ -1,0 +1,101 @@
+.title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 32pt;
+    font-weight: 300;
+    /*text-shadow: 1px 2px 3px rgb(51, 122, 183);*/
+    text-align: center;
+    color: rgba(68, 68, 68, 0.89);
+    margin-bottom: 30px;
+}
+.imgage-thumbnail {
+    /*max-height: 200px;*/
+}
+.thumbnail_new {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 20px;
+    max-width: 24%;
+
+}
+.thumbnail {
+    margin-bottom: 0px;
+}
+.new_font {
+    font-family: 'Comfortaa', cursive;
+    font-size: 16pt;
+    min-width: 230px;
+}
+.nav-tabs {
+    font-family: 'Comfortaa', cursive;
+    font-size: 14pt;
+}
+.btn-glyphicon { padding:8px; background:#ffffff; margin-right:4px;
+}
+.icon-btn {
+    padding: 1px 15px 3px 2px; border-radius:50px;
+    text-align: right;
+    font-family: 'Comfortaa', cursive;
+    font-size: 16pt;}
+.button_upload {
+    text-align: center;
+}
+.bg-danger, .bg-success{
+    margin-top: 20px;
+    font-size: 16pt;
+    padding: 15px;
+}
+.loginform {
+    margin-top: 100px;
+}
+
+
+/*INSERT STYLE FROM WEB*/
+
+
+.wrapper {
+    margin-top: 80px;
+    margin-bottom: 20px;
+}
+
+.form-signin {
+    max-width: 420px;
+    padding: 30px 38px 66px;
+    margin: 0 auto;
+    background-color: #eee;
+    border: 3px dotted rgba(0,0,0,0.1);
+}
+
+.form-signin-heading {
+    text-align:center;
+    margin-bottom: 30px;
+}
+
+.form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+}
+
+input[type="text"] {
+    margin-bottom: 0px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+input[type="password"] {
+    margin-bottom: 20px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.colorgraph {
+    height: 7px;
+    border-top: 0;
+    background: #c4e17f;
+    border-radius: 5px;
+    background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+}
