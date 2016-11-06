@@ -1,53 +1,31 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $images \common\models\Image[] */
 
-$this->title = 'My Yii Application';
+use yii\helpers\Url;
+
+$this->title = 'Gallery';
 ?>
-<div class="site-index">
-
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+<div class="row">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <div class="row ">
+            <h1 class="title">Image Gallery</h1>
+            <?php foreach ($images as $image):?>
+                <div class="thumbnail_new">
+                    <a class="thumbnail" href="<?= Url::to(['site/view', 'id' => $image->id]) ?>">
+                        <img class="imgage-thumbnail" src="<?= $image->getPath() //TODO Убрать вызов модели из вьюхи ?>" alt="<?= $image->description ?>">
+                    </a>
+                    <p>Просмотры: <span class="badge"><?= $image->views ?></span></p>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+    <div class="row">
+        <div class="col-sm-4 col-sm-push-4 col-sm-pull-4">
+            <div class="button_upload">
+                <a class="btn icon-btn btn-primary" href="<?= Url::to(['site/add']) ?>"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-primary"></span> Add New Image</a>
             </div>
         </div>
-
     </div>
 </div>
