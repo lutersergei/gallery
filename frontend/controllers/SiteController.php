@@ -8,16 +8,19 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use common\models\Image;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\web\NotFoundHttpException;
 
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
+    public $layout = 'gallery.php';
     /**
      * @inheritdoc
      */
@@ -72,7 +75,32 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $images = Image::find()->all();
+        return $this->render('index', [
+            'images' => $images,
+        ]);
+    }
+
+    public function actionView($id = null)
+    {
+        if ($id)
+        {
+            $image = Image::findOne($id);
+            if ($image)
+            {
+                return $this->render('view', [
+                    'image' => $image,
+                ]);
+            }
+            else
+            {
+                throw new NotFoundHttpException('Изображение не найдено');
+            }
+        }
+        else
+        {
+            throw new BadRequestHttpException();
+        }
     }
 
     /**
