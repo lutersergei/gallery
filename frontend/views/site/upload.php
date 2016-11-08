@@ -6,7 +6,6 @@
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
-var_dump($categories);
 $this->title = 'Загрузка в галерею';
 ?>
 <h1>Загрузка файлов в галерею</h1>
