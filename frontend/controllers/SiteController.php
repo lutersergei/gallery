@@ -1,19 +1,19 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Category;
+use frontend\models\ImageUploadForm;
 use Yii;
-use yii\base\InvalidParamException;
+use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
 use common\models\Image;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
+use yii\web\ServerErrorHttpException;
 
 /**
  * Site controller
@@ -21,6 +21,7 @@ use yii\web\NotFoundHttpException;
 class SiteController extends Controller
 {
     public $layout = 'gallery.php';
+
     /**
      * @inheritdoc
      */
@@ -75,65 +76,72 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $images = Image::find()->all();
+        $images = Image::find()->with('category')->all();
         return $this->render('index', [
             'images' => $images,
         ]);
     }
 
+    /**
+     * View one image
+     *
+     * @param null $id
+     * @return mixed
+     * @throws BadRequestHttpException
+     * @throws NotFoundHttpException
+     */
     public function actionView($id = null)
     {
-        if ($id)
-        {
-            $image = Image::findOne($id);
-            if ($image)
-            {
+        if ($id) {
+            $image = Image::find()->where(['id' => $id])->with('category')->one();
+            if ($image) {
+                $image->countView();
                 return $this->render('view', [
                     'image' => $image,
                 ]);
-            }
-            else
-            {
+            } else {
                 throw new NotFoundHttpException('Изображение не найдено');
             }
-        }
-        else
-        {
+        } else {
             throw new BadRequestHttpException();
         }
     }
 
     /**
-     * Logs in a user.
+     * Adding image
      *
      * @return mixed
+     * @throws ServerErrorHttpException
      */
-    public function actionLogin()
+    public function actionAddImage()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+        $model = new ImageUploadForm();
+        $post = Yii::$app->request->post('ImageUploadForm');
+        if (count($post)) {
+            $image = UploadedFile::getInstance($model, 'imageFile');
+            $imageName = Image::saveImage($image);
+            if ($imageName) {
+                $model->description = $post['description'];
+                $model->category_id = $post['category_id'];
+                $model->imageFile = $imageName;
+                if ($model->pictureUpload()) {
+                    Yii::$app->session->setFlash('success', "Изображение $imageName успешно загружено!");
+                    return $this->refresh();
+                } else {
+                    throw new ServerErrorHttpException('Не удалось сохранить изображение');
+                }
+            } else {
+                throw new ServerErrorHttpException('Не удалось загрузить изображение');
+            }
+
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Logs out the current user.
-     *
-     * @return mixed
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
+//        $type = FileHelper::getMimeType($picture->tempName); //TODO применить проверку на mime type
+        $categories = Category::find()->all();
+        return $this->render('upload', [
+            'model' => $model,
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -169,73 +177,4 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    /**
-     * Signs user up.
-     *
-     * @return mixed
-     */
-    public function actionSignup()
-    {
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
-            }
-        }
-
-        return $this->render('signup', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Requests password reset.
-     *
-     * @return mixed
-     */
-    public function actionRequestPasswordReset()
-    {
-        $model = new PasswordResetRequestForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
-
-                return $this->goHome();
-            } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
-            }
-        }
-
-        return $this->render('requestPasswordResetToken', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Resets password.
-     *
-     * @param string $token
-     * @return mixed
-     * @throws BadRequestHttpException
-     */
-    public function actionResetPassword($token)
-    {
-        try {
-            $model = new ResetPasswordForm($token);
-        } catch (InvalidParamException $e) {
-            throw new BadRequestHttpException($e->getMessage());
-        }
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password was saved.');
-
-            return $this->goHome();
-        }
-
-        return $this->render('resetPassword', [
-            'model' => $model,
-        ]);
-    }
 }
