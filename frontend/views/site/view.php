@@ -19,7 +19,7 @@ $this->title = 'Просмотр';
         'method' => 'post',
     ],
 ]) ?>
-<?= Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-edit img-circle text-success') . 'Edit', ['site/edit', 'id' => $image->id], [
+<?= Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-edit img-circle text-success') . 'Edit', ['site/update', 'id' => $image->id], [
     'class' => 'btn icon-btn btn-success',
     'data' => [
         'method' => 'post',
