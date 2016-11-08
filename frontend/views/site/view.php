@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $image \common\models\Image */
 use yii\helpers\Url;
+use yii\bootstrap\Html;
 $this->title = 'Просмотр';
 ?>
 <h1 class="title">Просмотр изображения</h1>
@@ -11,5 +12,16 @@ $this->title = 'Просмотр';
 <h4>Описание: <?= $image->description ?></h4>
 <h4>Загружено: <?= $image->created_at ?></h4>
 <h4>Количество просмотров: <span class="badge"><?= $image->views ?></span></h4>
-<a class="btn icon-btn btn-warning" href="<?= Url::to(['image/delete', 'id' => $image->id]) ?>"><span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning"></span>Remove</a>
-<a class="btn icon-btn btn-success" href="<?= Url::to(['image/edit', 'id' => $image->id]) ?>"><span class="glyphicon btn-glyphicon glyphicon-edit img-circle text-success"></span>Edit</a>
+<?= Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-minus img-circle text-warning') . 'Remove', ['site/delete', 'id' => $image->id], [
+    'class' => 'btn icon-btn btn-warning',
+    'data' => [
+        'confirm' => 'Вы уверены, что хотите удалить?',
+        'method' => 'post',
+    ],
+]) ?>
+<?= Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-edit img-circle text-success') . 'Edit', ['site/edit', 'id' => $image->id], [
+    'class' => 'btn icon-btn btn-success',
+    'data' => [
+        'method' => 'post',
+    ],
+]) ?>

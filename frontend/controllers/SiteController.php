@@ -48,6 +48,7 @@ class SiteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
+                    'delete' => ['post'],
                 ],
             ],
         ];
@@ -109,7 +110,7 @@ class SiteController extends Controller
 
     /**
      * Adding image
-     *
+     * If adding is successful, the browser will be redirected to the 'index' page.
      * @return mixed
      * @throws ServerErrorHttpException
      */
@@ -142,6 +143,34 @@ class SiteController extends Controller
             'model' => $model,
             'categories' => $categories,
         ]);
+    }
+
+    /**
+     * Deletes an existing Image model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+        $this->findImage($id)->delete();
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the Image model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Image the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findImage($id)
+    {
+        if (($model = Image::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('Запрашиваемая страница не найдена.');
+        }
     }
 
     /**
