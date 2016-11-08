@@ -49,6 +49,7 @@ class SiteController extends Controller
                 'actions' => [
                     'logout' => ['post'],
                     'delete' => ['post'],
+                    'update' => ['post'],
                 ],
             ],
         ];
@@ -155,6 +156,25 @@ class SiteController extends Controller
     {
         $this->findImage($id)->delete();
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Updates an existing Page model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionUpdate($id)
+    {
+        $image = $this->findImage($id);
+
+        if ($image->load(Yii::$app->request->post()) && $image->save()) {
+            return $this->redirect(['view', 'id' => $image->id]);
+        } else {
+            return $this->render('update', [
+                'image' => $image,
+            ]);
+        }
     }
 
     /**
