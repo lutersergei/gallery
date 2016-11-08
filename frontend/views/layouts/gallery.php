@@ -28,24 +28,36 @@ GalleryAsset::register($this);
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-            <div class="row ">
-                <ul class="nav nav-tabs">
-                    <li><a href="<?= Url::to(['/site/index']) ?>">Gallery</a></li>
-                    <li><a href="<?= Url::to(['/site/add-image']) ?>">Add Image </a></li>
-                    <?php
-                    if (Yii::$app->user->isGuest):
-                        ?>
-                        <li><a href="<?= Url::to(['/user/signup']) ?>">Sign Up</a></li>
-                        <li><a href="<?= Url::to(['/user/login']) ?>">Login</a></li>
-                        <?php
-                    else:
-                        ?>
-                        <li role="presentation" ><a href=".<?= Url::to(['/user/profile']) ?>">Settings</a></li>
-                        <?php
-                    endif;
-                    ?>
-                </ul>
-            </div>
+            <?php
+            echo Nav::widget([
+                'items' => [
+                    [
+                        'label' => 'Gallery',
+                        'url' => ['site/index'],
+                    ],
+                    [
+                        'label' => 'Add Image',
+                        'url' => ['site/add-image'],
+                    ],
+                    [
+                        'label' => 'Setting',
+                        'url' => ['user/profile'],
+                        'visible' => !Yii::$app->user->isGuest
+                    ],
+                    [
+                        'label' => 'Sign Up',
+                        'url' => ['user/signup'],
+                        'visible' => Yii::$app->user->isGuest
+                    ],
+                    [
+                        'label' => 'Login',
+                        'url' => ['user/login'],
+                        'visible' => Yii::$app->user->isGuest
+                    ],
+                ],
+                'options' => ['class' =>'nav nav-tabs'],
+            ]);
+            ?>
         </div>
     </div>
     <div class="row">
