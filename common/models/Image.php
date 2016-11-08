@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "{{%image}}".
@@ -86,5 +87,34 @@ class Image extends \yii\db\ActiveRecord
     public function getPath()
     {
         return self::IMAGE_DIR . $this->name;
+    }
+
+    /**
+     * @param $image UploadedFile
+     * @return null|string name
+     */
+    public static function saveImage($image)
+    {
+        $image_dir = \Yii::getAlias('@webroot');
+
+        $pictureFilename = $image_dir . '/' . 'upload' . '/' . $image->name;
+
+        if ($image->saveAs($pictureFilename))
+        {
+            return $image->name;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    /**
+     * Increment count of view
+     */
+    public function countView()
+    {
+        $this->views++;
+        $this->save();
     }
 }
