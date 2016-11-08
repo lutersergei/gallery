@@ -40,6 +40,9 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '<action:view>/<id:\d+>' => 'site/<action>',
+                '<action:profile>' => 'user/<action>',
+                '<action>' => 'site/<action>',
             ],
         ],
     ],
