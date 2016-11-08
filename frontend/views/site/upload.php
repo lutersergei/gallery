@@ -6,6 +6,7 @@
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
+var_dump($categories);
 $this->title = 'Загрузка в галерею';
 ?>
 <h1>Загрузка файлов в галерею</h1>
@@ -18,7 +19,7 @@ $form = ActiveForm::begin([
 echo $form->field($model, 'imageFile', [
     'enableLabel' => false
 ])->fileInput();
-echo $form->field($model, 'category_id')->dropDownList(ArrayHelper::map($categories, 'id', 'category'));
+echo $form->field($model, 'category_id')->dropDownList($categories);
 echo $form->field($model, 'description')->textarea(['autofocus' => true, 'rows' => 5]);
 echo Html::submitButton(Html::icon('glyphicon btn-glyphicon glyphicon-ok img-circle text-success') . 'Add', ['class' => 'btn icon-btn btn-success']);
 ActiveForm::end();

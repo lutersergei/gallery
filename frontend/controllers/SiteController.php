@@ -139,7 +139,7 @@ class SiteController extends Controller
         }
 
 //        $type = FileHelper::getMimeType($picture->tempName); //TODO применить проверку на mime type
-        $categories = Category::find()->all();
+        $categories = Category::find()->select(['category', 'id'])->indexBy('id')->column();
         return $this->render('upload', [
             'model' => $model,
             'categories' => $categories,
