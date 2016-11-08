@@ -47,6 +47,7 @@ class UserController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
+                    'reset' => ['post'],
                 ],
             ],
         ];
@@ -66,6 +67,14 @@ class UserController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function actionProfile()
+    {
+        return $this->render('profile');
     }
 
     /**
