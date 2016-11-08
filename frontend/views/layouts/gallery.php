@@ -32,25 +32,25 @@ GalleryAsset::register($this);
             echo Nav::widget([
                 'items' => [
                     [
-                        'label' => 'Gallery',
+                        'label' => 'Галерея',
                         'url' => ['site/index'],
                     ],
                     [
-                        'label' => 'Add Image',
+                        'label' => 'Добавление',
                         'url' => ['site/add-image'],
                     ],
                     [
-                        'label' => 'Setting',
+                        'label' => 'Профиль',
                         'url' => ['user/profile'],
                         'visible' => !Yii::$app->user->isGuest
                     ],
                     [
-                        'label' => 'Sign Up',
+                        'label' => 'Регистрация',
                         'url' => ['user/signup'],
                         'visible' => Yii::$app->user->isGuest
                     ],
                     [
-                        'label' => 'Login',
+                        'label' => 'Bход',
                         'url' => ['user/login'],
                         'visible' => Yii::$app->user->isGuest
                     ],

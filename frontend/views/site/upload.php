@@ -20,5 +20,5 @@ echo $form->field($model, 'imageFile', [
 ])->fileInput();
 echo $form->field($model, 'category_id')->dropDownList($categories);
 echo $form->field($model, 'description')->textarea(['autofocus' => true, 'rows' => 5]);
-echo Html::submitButton(Html::icon('glyphicon btn-glyphicon glyphicon-ok img-circle text-success') . 'Add', ['class' => 'btn icon-btn btn-success']);
+echo Html::submitButton(Html::icon('glyphicon btn-glyphicon glyphicon-ok img-circle text-success') . 'Загрузить!', ['class' => 'btn icon-btn btn-success']);
 ActiveForm::end();

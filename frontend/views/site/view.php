@@ -12,14 +12,14 @@ $this->title = 'Просмотр';
 <h4>Описание: <?= $image->description ?></h4>
 <h4>Загружено: <?= $image->created_at ?></h4>
 <h4>Количество просмотров: <span class="badge"><?= $image->views ?></span></h4>
-<?= Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-minus img-circle text-warning') . 'Remove', ['site/delete', 'id' => $image->id], [
-    'class' => 'btn icon-btn btn-warning',
+<?= Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-minus img-circle text-danger') . 'Удалить', ['site/delete', 'id' => $image->id], [
+    'class' => 'btn icon-btn btn-danger',
     'data' => [
         'confirm' => 'Вы уверены, что хотите удалить?',
         'method' => 'post',
     ],
 ]) ?>
-<?= Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-edit img-circle text-success') . 'Edit', ['site/update', 'id' => $image->id], [
+<?= Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-edit img-circle text-success') . 'Изменить', ['site/update', 'id' => $image->id], [
     'class' => 'btn icon-btn btn-success',
     'data' => [
         'method' => 'post',

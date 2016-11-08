@@ -16,7 +16,7 @@ $this->title = 'Редактирование';
     ]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Html::icon('glyphicon btn-glyphicon glyphicon-edit img-circle text-success') . 'Update', [
+        <?= Html::submitButton(Html::icon('glyphicon btn-glyphicon glyphicon-edit img-circle text-success') . 'Изменить', [
             'class' => 'btn icon-btn btn-success'
         ]) ?>
     </div>

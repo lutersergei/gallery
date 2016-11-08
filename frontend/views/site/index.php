@@ -23,7 +23,7 @@ $this->title = 'Галерея';
     <hr>
     <div class="col-sm-4 col-sm-push-4 col-sm-pull-4">
         <div class="button_upload">
-            <?= Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-plus img-circle text-primary') . 'Add New Image', ['site/add-image'], ['class' => 'btn icon-btn btn-primary']) ?>
+            <?= Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-plus img-circle text-primary') . 'Добавить', ['site/add-image'], ['class' => 'btn icon-btn btn-primary']) ?>
         </div>
     </div>
 </div>
