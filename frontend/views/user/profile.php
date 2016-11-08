@@ -11,6 +11,7 @@ $this->title = 'Профиль пользователя';
     echo Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-trash img-circle text-danger') . 'Reset DB', ['user/reset'], [
         'class' => 'btn icon-btn btn-danger',
         'data' => [
+            'confirm' => 'Удалить все изображения из БД?',
             'method' => 'post'
         ]
     ] );

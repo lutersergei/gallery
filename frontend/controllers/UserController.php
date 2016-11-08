@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use Codeception\Exception\ElementNotFound;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -75,6 +76,20 @@ class UserController extends Controller
     public function actionProfile()
     {
         return $this->render('profile');
+    }
+
+    /**
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionReset()
+    {
+        if (Image::deleteAll())
+        {
+            Yii::$app->session->setFlash('success', 'БД успешно очищена');
+            return $this->redirect(['site/index']);
+        }
+        else throw new NotFoundHttpException('БД уже очищена или произошла ошибка');
     }
 
     /**
