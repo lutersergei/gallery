@@ -31,7 +31,7 @@ GalleryAsset::register($this);
             <div class="row ">
                 <ul class="nav nav-tabs">
                     <li><a href="<?= Url::to(['/site/index']) ?>">Gallery</a></li>
-                    <li><a href="<?= Url::to(['/site/add']) ?>">Add Image </a></li>
+                    <li><a href="<?= Url::to(['/site/add-image']) ?>">Add Image </a></li>
                     <?php
                     if (Yii::$app->user->isGuest):
                         ?>
@@ -50,6 +50,7 @@ GalleryAsset::register($this);
     </div>
     <div class="row">
         <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+            <?= Alert::widget() ?>
             <?= $content ?>
         </div>
     </div>

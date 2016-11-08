@@ -4,10 +4,11 @@
 /* @var $images \common\models\Image[] */
 
 use yii\helpers\Url;
+use yii\bootstrap\Html;
 
 $this->title = 'Галерея';
 ?>
-<div class="row ">
+<div class="row">
     <h1 class="title">Image Gallery</h1>
     <?php foreach ($images as $image):?>
         <div class="thumbnail_new">
@@ -19,9 +20,10 @@ $this->title = 'Галерея';
     <?php endforeach; ?>
 </div>
 <div class="row">
+    <hr>
     <div class="col-sm-4 col-sm-push-4 col-sm-pull-4">
         <div class="button_upload">
-            <a class="btn icon-btn btn-primary" href="<?= Url::to(['site/add']) ?>"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-primary"></span> Add New Image</a>
+            <?= Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-plus img-circle text-primary') . 'Add New Image', ['site/add-image'], ['class' => 'btn icon-btn btn-primary']) ?>
         </div>
     </div>
 </div>

@@ -7,6 +7,7 @@ $this->title = 'Просмотр';
 ?>
 <h1 class="title">Просмотр изображения</h1>
 <a class="thumbnail" href="<?= $image->getPath() ?>"><img src="<?= $image->getPath() ?>" alt="<?= $image->description ?>"></a>
+<h4>Категория: <?= $image->category->category ?></h4>
 <h4>Описание: <?= $image->description ?></h4>
 <h4>Загружено: <?= $image->created_at ?></h4>
 <h4>Количество просмотров: <span class="badge"><?= $image->views ?></span></h4>
