@@ -38,7 +38,7 @@ class Image extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'name', 'category_id'], 'required'],
+            [['name', 'category_id'], 'required'],
             [['user_id', 'category_id', 'views', 'rating'], 'integer'],
             [['created_at'], 'safe'],
             [['name', 'description'], 'string', 'max' => 255],

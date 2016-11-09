@@ -14,7 +14,7 @@ class m161104_114902_image extends Migration
 
         $this->createTable('{{%image}}', [
             'id' => $this->primaryKey(),
-            'user_id' => $this->integer()->notNull(),
+            'user_id' => $this->integer(),
             'name' => $this->string()->notNull()->unique(),
             'category_id' => $this->integer()->notNull(),
             'description' => $this->string()->defaultValue(null),
