@@ -20,8 +20,6 @@ use yii\web\ServerErrorHttpException;
  */
 class SiteController extends Controller
 {
-    public $layout = 'gallery.php';
-
     /**
      * @inheritdoc
      */
@@ -78,6 +76,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $this->layout = 'gallery.php';
         $images = Image::find()->with('category')->all();
         return $this->render('index', [
             'images' => $images,
