@@ -109,6 +109,13 @@ class Image extends \yii\db\ActiveRecord
         }
     }
 
+    public static function getOneWithIncrement($id)
+    {
+        $image = self::find()->where(['id' => $id])->with('category')->one();
+        $image->updateCounters(['views' => 1]);
+        return $image;
+    }
+
     /**
      * Increment count of view
      */

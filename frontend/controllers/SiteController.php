@@ -94,9 +94,8 @@ class SiteController extends Controller
     public function actionView($id = null)
     {
         if ($id) {
-            $image = Image::find()->where(['id' => $id])->with('category')->one();
+            $image = Image::getOneWithIncrement($id);
             if ($image) {
-                $image->countView();
                 return $this->render('view', [
                     'image' => $image,
                 ]);
