@@ -13,7 +13,7 @@ $this->title = 'Галерея';
     <?php foreach ($images as $image):?>
         <div class="thumbnail_new">
             <a class="thumbnail" href="<?= Url::to(['site/view', 'id' => $image->id]) ?>">
-                <img class="imgage-thumbnail" src="<?= $image->getPath() //TODO Убрать вызов модели из вьюхи ?>" alt="<?= $image->description ?>">
+                <img class="imgage-thumbnail" src="<?= $image->getThumbPath() //TODO Убрать вызов модели из вьюхи ?>" alt="<?= $image->description ?>">
             </a>
             <p>Просмотры: <span class="badge"><?= $image->views ?></span></p>
         </div>

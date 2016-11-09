@@ -24,6 +24,7 @@ use yii\imagine\Image;
 class Pictures extends \yii\db\ActiveRecord
 {
     const IMAGE_DIR = '/upload/';
+    const THUMB_DIR = '/thumbnails/';
 
     /**
      * @inheritdoc
@@ -85,9 +86,17 @@ class Pictures extends \yii\db\ActiveRecord
     /**
      * @return string Full path to image
      */
-    public function getPath()
+    public function getImagePath()
     {
         return self::IMAGE_DIR . $this->name;
+    }
+
+    /**
+     * @return string Full path to image
+     */
+    public function getThumbPath()
+    {
+        return self::THUMB_DIR . $this->name;
     }
 
     /**
@@ -96,12 +105,15 @@ class Pictures extends \yii\db\ActiveRecord
      */
     public static function saveImage($image)
     {
-        $image_dir = \Yii::getAlias('@webroot');
+        $front= \Yii::getAlias('@webroot');
 
-        $pictureFilename = $image_dir . '/' . 'upload' . '/' . $image->name;
+        $pictureFilename = $front . self::IMAGE_DIR . $image->name;
+
+        $thumbFilename = $front . self::THUMB_DIR . $image->name;
 
         if ($image->saveAs($pictureFilename))
         {
+            Image::thumbnail($pictureFilename, 200, 160)->save($thumbFilename, ['quality' => 100]);
             return $image->name;
         }
         else
