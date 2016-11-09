@@ -9,7 +9,7 @@ use yii\bootstrap\Html;
 $this->title = 'Загрузка в галерею';
 ?>
 <h1>Загрузка файлов в галерею</h1>
-<p class="bg-danger">Максимальный размер файла 5Mb !</p>
+<p class="bg-danger">Максимальный размер файла 20Mb !</p>
 <?php
 $form = ActiveForm::begin([
     'id' => 'ImageUploadForm',
