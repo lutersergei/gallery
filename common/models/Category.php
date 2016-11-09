@@ -10,7 +10,7 @@ use Yii;
  * @property integer $id
  * @property string $category
  *
- * @property Image[] $images
+ * @property Pictures[] $images
  */
 class Category extends \yii\db\ActiveRecord
 {
@@ -49,6 +49,6 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getImages()
     {
-        return $this->hasMany(Image::className(), ['category_id' => 'id']);
+        return $this->hasMany(Pictures::className(), ['category_id' => 'id']);
     }
 }

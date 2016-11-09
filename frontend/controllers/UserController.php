@@ -9,7 +9,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
-use common\models\Image;
+use common\models\Pictures;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
@@ -83,7 +83,7 @@ class UserController extends Controller
      */
     public function actionReset()
     {
-        if (Image::deleteAll())
+        if (Pictures::deleteAll())
         {
             Yii::$app->session->setFlash('success', 'БД успешно очищена');
             return $this->redirect(['site/index']);

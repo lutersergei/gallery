@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\web\UploadedFile;
+use yii\imagine\Image;
 
 /**
  * This is the model class for table "{{%image}}".
@@ -20,7 +21,7 @@ use yii\web\UploadedFile;
  * @property Category $category
  * @property User $user
  */
-class Image extends \yii\db\ActiveRecord
+class Pictures extends \yii\db\ActiveRecord
 {
     const IMAGE_DIR = '/upload/';
 
@@ -29,7 +30,7 @@ class Image extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%image}}';
+        return '{{%pictures}}';
     }
 
     /**

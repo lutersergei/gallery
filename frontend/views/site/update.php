@@ -1,6 +1,6 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $image \common\models\Image */
+/* @var $image \common\models\Pictures */
 use yii\helpers\Url;
 use yii\bootstrap\Html;
 use yii\bootstrap\ActiveForm;

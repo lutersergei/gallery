@@ -9,7 +9,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\Image;
+use common\models\Pictures;
 use frontend\models\ContactForm;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
@@ -77,7 +77,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $this->layout = 'gallery.php';
-        $images = Image::find()->with('category')->all();
+        $images = Pictures::find()->with('category')->all();
         return $this->render('index', [
             'images' => $images,
         ]);
@@ -94,7 +94,7 @@ class SiteController extends Controller
     public function actionView($id = null)
     {
         if ($id) {
-            $image = Image::getOneWithIncrement($id);
+            $image = Pictures::getOneWithIncrement($id);
             if ($image) {
                 return $this->render('view', [
                     'image' => $image,
@@ -119,7 +119,7 @@ class SiteController extends Controller
         $post = Yii::$app->request->post('ImageUploadForm');
         if (count($post)) {
             $image = UploadedFile::getInstance($model, 'imageFile');
-            $imageName = Image::saveImage($image);
+            $imageName = Pictures::saveImage($image);
             if ($imageName) {
                 $model->description = $post['description'];
                 $model->category_id = $post['category_id'];
@@ -179,12 +179,12 @@ class SiteController extends Controller
      * Finds the Image model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Image the loaded model
+     * @return Pictures the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findImage($id)
     {
-        if (($model = Image::findOne($id)) !== null) {
+        if (($model = Pictures::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('Запрашиваемая страница не найдена.');

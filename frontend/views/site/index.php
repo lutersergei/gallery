@@ -1,7 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $images \common\models\Image[] */
+/* @var $images \common\models\Pictures[] */
 
 use yii\helpers\Url;
 use yii\bootstrap\Html;

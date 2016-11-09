@@ -1,6 +1,6 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $model \common\models\Image */
+/* @var $model \common\models\Pictures */
 /* @var $categories \common\models\Category[] */
 
 use yii\helpers\ArrayHelper;
