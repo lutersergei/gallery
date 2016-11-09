@@ -7,9 +7,9 @@ use yii\bootstrap\Html;
 $this->title = 'Просмотр';
 ?>
 <h1 class="title">Просмотр изображения</h1>
-<a class="thumbnail" href="<?= $image->getImagePath() ?>"><img src="<?= $image->getImagePath() ?>" alt="<?= $image->description ?>"></a>
+<a class="thumbnail" href="<?= $image->getImagePath() ?>"><img src="<?= $image->getImagePath() ?>"></a>
 <h4>Категория: <?= $image->category->category ?></h4>
-<h4>Описание: <?= $image->description ?></h4>
+<h4>Описание: <?= Html::encode($image->description) ?></h4>
 <h4>Загружено: <?= $image->created_at ?></h4>
 <h4>Количество просмотров: <span class="badge"><?= $image->views ?></span></h4>
 <?= Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-minus img-circle text-danger') . 'Удалить', ['site/delete', 'id' => $image->id], [
