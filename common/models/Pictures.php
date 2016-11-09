@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\web\UploadedFile;
 use yii\imagine\Image;
+use frontend\controllers\FileController;
 
 /**
  * This is the model class for table "{{%image}}".
@@ -136,5 +137,19 @@ class Pictures extends \yii\db\ActiveRecord
     {
         $this->views++;
         $this->save();
+    }
+
+    /**
+     * Delete image and thumb before delete from database
+     *
+     * @return bool
+     */
+    public function beforeDelete()
+    {
+        if (parent::beforeDelete() && FileController::actionDelete($this->name)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

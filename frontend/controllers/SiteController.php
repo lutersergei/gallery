@@ -157,6 +157,23 @@ class SiteController extends Controller
     }
 
     /**
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionReset()
+    {
+        if (Pictures::deleteAll())
+        {
+            if (FileController::actionClearFolders())
+            {
+                Yii::$app->session->setFlash('success', 'БД и папки успешно очищены');
+                return $this->redirect(['site/index']);
+            }
+        }
+        else throw new NotFoundHttpException('БД уже очищена или произошла ошибка');
+    }
+
+    /**
      * Updates an existing Page model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id

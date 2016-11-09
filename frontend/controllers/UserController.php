@@ -78,20 +78,6 @@ class UserController extends Controller
     }
 
     /**
-     * @return mixed
-     * @throws NotFoundHttpException
-     */
-    public function actionReset()
-    {
-        if (Pictures::deleteAll())
-        {
-            Yii::$app->session->setFlash('success', 'БД успешно очищена');
-            return $this->redirect(['site/index']);
-        }
-        else throw new NotFoundHttpException('БД уже очищена или произошла ошибка');
-    }
-
-    /**
      * Logs in a user.
      *
      * @return mixed

@@ -8,7 +8,7 @@ $this->title = 'Профиль пользователя';
     <h2>Очистить базу данных и удалить файлы</h2>
 
     <?php
-    echo Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-trash img-circle text-danger') . 'Очистка БД', ['user/reset'], [
+    echo Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-trash img-circle text-danger') . 'Очистка БД', ['site/reset'], [
         'class' => 'btn icon-btn btn-danger',
         'data' => [
             'confirm' => 'Удалить все изображения из БД?',
