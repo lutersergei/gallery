@@ -72,14 +72,26 @@ class SiteController extends Controller
     /**
      * Displays homepage.
      *
+     * @param null Category
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($cat = null)
     {
+        if ($cat)
+        {
+            $images = Pictures::find()->where(['category_id' => $cat])->all();
+        }
+        else
+        {
+            $images = Pictures::find()->all();
+        }
+        $count_pictures = Pictures::find()->count();
         $this->layout = 'gallery.php';
-        $images = Pictures::find()->with('category')->all();
+        $categories = Category::getCategoryWithCount()->all();
         return $this->render('index', [
             'images' => $images,
+            'categories' => $categories,
+            'count_pictures' => $count_pictures
         ]);
     }
 
