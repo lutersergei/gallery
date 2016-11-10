@@ -61,7 +61,7 @@ $this->title = 'Галерея';
         <div class="list-group">
             <?php foreach ($users as $user):
                 if($user->count_pictures):?>
-                    <a class="list-group-item">
+                    <a href="<?= Url::to(['site/index', 'user' => $user->id]) ?>" class="list-group-item">
                         <span class="badge"><?= $user->count_pictures ?></span>
                         <p class="list-group-item-text">
                             <?= $user->username ?>

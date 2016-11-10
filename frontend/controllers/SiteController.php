@@ -76,11 +76,16 @@ class SiteController extends Controller
      * @param null Category
      * @return mixed
      */
-    public function actionIndex($cat = null)
+    public function actionIndex($cat = null, $user = null)
     {
+
         if ($cat)
         {
             $images = Pictures::find()->where(['category_id' => $cat])->all();
+        }
+        elseif ($user)
+        {
+            $images = Pictures::find()->where(['user_id' => $user])->all();
         }
         else
         {
