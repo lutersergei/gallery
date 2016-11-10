@@ -43,6 +43,7 @@ return [
             'rules' => [
                 '<action:view|delete|update>/<id:\d+>' => 'site/<action>',
                 '<action:profile>' => 'user/<action>',
+                'category/<cat:\d+>' => 'site/index',
                 '<action>' => 'site/<action>',
             ],
         ],
