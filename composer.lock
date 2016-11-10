@@ -4,9 +4,52 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0f288b4896afa40aa53080a10f78d4a0",
-    "content-hash": "72a6163f1d35b8a307b07b92c8177fda",
+    "hash": "5d370bb411739741bc3c5ac287558b73",
+    "content-hash": "539ed4123aa2a25670212298d909ff5d",
     "packages": [
+        {
+            "name": "2amigos/yii2-transliterator-helper",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2amigos/yii2-transliterator-helper.git",
+                "reference": "b859f5205bcb14409a75687241a94331a0ff0f2b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/2amigos/yii2-transliterator-helper/zipball/b859f5205bcb14409a75687241a94331a0ff0f2b",
+                "reference": "b859f5205bcb14409a75687241a94331a0ff0f2b",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "dosamigos\\transliterator\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Antonio Ramirez",
+                    "email": "ramirez.cobos@gmail.com",
+                    "homepage": "http://www.ramirezcobos.com"
+                }
+            ],
+            "description": "Transliterator Helper for Yii2.",
+            "keywords": [
+                "extension",
+                "helper",
+                "transliterator",
+                "yii"
+            ],
+            "time": "2014-01-17 15:55:42"
+        },
         {
             "name": "bower-asset/bootstrap",
             "version": "v3.3.7",

@@ -5,7 +5,6 @@ use common\models\Category;
 use common\models\User;
 use frontend\models\ImageUploadForm;
 use Yii;
-use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -15,7 +14,7 @@ use frontend\models\ContactForm;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 use yii\web\ServerErrorHttpException;
-
+use dosamigos\transliterator\TransliteratorHelper;
 /**
  * Site controller
  */
@@ -78,7 +77,6 @@ class SiteController extends Controller
      */
     public function actionIndex($cat = null, $user = null)
     {
-
         if ($cat)
         {
             $images = Pictures::find()->where(['category_id' => $cat])->all();
@@ -139,6 +137,7 @@ class SiteController extends Controller
         $post = Yii::$app->request->post('ImageUploadForm');
         if (count($post)) {
             $image = UploadedFile::getInstance($model, 'imageFile');
+            $image->name = TransliteratorHelper::process($image->name);
             $imageName = Pictures::saveImage($image);
             if ($imageName) {
                 $model->description = $post['description'];
