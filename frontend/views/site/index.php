@@ -4,6 +4,7 @@
 /* @var $images \common\models\Pictures[] */
 /* @var $categories \common\models\Category[] */
 /* @var $count_pictures integer */
+/* @var $users \common\models\User[] */
 
 use yii\helpers\Url;
 use yii\bootstrap\Html;
@@ -48,6 +49,20 @@ $this->title = 'Галерея';
                         <span class="badge"><?= $category->count_pictures ?></span>
                         <p class="list-group-item-text">
                             <?= $category->category ?>
+                        </p>
+                    </a>
+                    <?php
+                endif;
+            endforeach;?>
+        </div>
+        <h3>Пользователи</h3>
+        <div class="list-group">
+            <?php foreach ($users as $user):
+                if($user->count_pictures):?>
+                    <a class="list-group-item">
+                        <span class="badge"><?= $user->count_pictures ?></span>
+                        <p class="list-group-item-text">
+                            <?= $user->username ?>
                         </p>
                     </a>
                     <?php

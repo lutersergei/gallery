@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use common\models\Category;
+use common\models\User;
 use frontend\models\ImageUploadForm;
 use Yii;
 use yii\helpers\Url;
@@ -88,10 +89,12 @@ class SiteController extends Controller
         $count_pictures = Pictures::find()->count();
         $this->layout = 'gallery.php';
         $categories = Category::getCategoriesWithCount()->all();
+        $users = User::getUsersWithCount()->all();
         return $this->render('index', [
             'images' => $images,
             'categories' => $categories,
-            'count_pictures' => $count_pictures
+            'count_pictures' => $count_pictures,
+            'users' => $users,
         ]);
     }
 
