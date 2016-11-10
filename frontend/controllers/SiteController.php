@@ -87,7 +87,7 @@ class SiteController extends Controller
         }
         $count_pictures = Pictures::find()->count();
         $this->layout = 'gallery.php';
-        $categories = Category::getCategoryWithCount()->all();
+        $categories = Category::getCategoriesWithCount()->all();
         return $this->render('index', [
             'images' => $images,
             'categories' => $categories,

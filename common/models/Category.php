@@ -57,14 +57,12 @@ class Category extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public static function getCategoryWithCount()
+    public static function getCategoriesWithCount()
     {
         $cat = self::find()
             ->select(['category.*, COUNT(pictures.id) AS count_pictures'])
             ->leftJoin(Pictures::tableName(), 'pictures.category_id = category.id')
             ->groupBy(['category.id']);
-//        print_r($cat);
-//        die();
         return $cat;
     }
 }
