@@ -62,7 +62,8 @@ class Category extends \yii\db\ActiveRecord
         $cat = self::find()
             ->select(['category.*, COUNT(pictures.id) AS count_pictures'])
             ->leftJoin(Pictures::tableName(), 'pictures.category_id = category.id')
-            ->groupBy(['category.id']);
+            ->groupBy(['category.id'])
+            ->orderBy('count_pictures DESC');
         return $cat;
     }
 }
