@@ -201,12 +201,13 @@ class SiteController extends Controller
     public function actionUpdate($id)
     {
         $image = $this->findImage($id);
-
+        $categories = Category::find()->select(['category', 'id'])->indexBy('id')->column();
         if ($image->load(Yii::$app->request->post()) && $image->save()) {
             return $this->redirect(['view', 'id' => $image->id]);
         } else {
             return $this->render('update', [
                 'image' => $image,
+                'categories' => $categories,
             ]);
         }
     }
