@@ -14,7 +14,7 @@ class m161104_114546_category extends Migration
 
         $this->createTable('{{%category}}', [
             'id' => $this->primaryKey(),
-            'category' => $this->string(15)->notNull(),
+            'category' => $this->string(15)->unique()->notNull(),
         ], $tableOptions);
 
     }
