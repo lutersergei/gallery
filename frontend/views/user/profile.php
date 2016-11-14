@@ -20,7 +20,7 @@ $this->title = 'Профиль пользователя';
 <div class="row">
     <h2>Выйти из аккаунта администратора</h2>
     <?php
-    echo Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-log-out img-circle text-warning') . 'Выход', ['user/logout'], [
+    echo Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-log-out img-circle text-warning') . 'Bыход', ['user/logout'], [
         'class' => 'btn icon-btn btn-warning',
         'data' => [
             'method' => 'post'
