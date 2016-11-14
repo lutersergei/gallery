@@ -17,6 +17,8 @@ class m161104_114546_category extends Migration
             'category' => $this->string(15)->unique()->notNull(),
         ], $tableOptions);
 
+        $this->execute('INSERT INTO `category` (`id`, `category`) VALUES (\'1\', \'Без категории\')');
+
     }
 
     public function safeDown()
