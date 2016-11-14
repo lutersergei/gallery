@@ -29,7 +29,7 @@ class UserController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'profile'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -37,7 +37,7 @@ class UserController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'profile'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -46,7 +46,6 @@ class UserController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
                     'reset' => ['post'],
                 ],
             ],
