@@ -43,7 +43,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '<action:view|delete|update>/<id:\d+>' => 'site/<action>',
-                '<action:profile>' => 'user/<action>',
+                '<action:profile|login|signup|logout>' => 'user/<action>',
                 'category/<cat:\d+>' => 'site/index',
                 'user/<user:\d+>' => 'site/index',
                 '<action>' => 'site/<action>',
