@@ -26,8 +26,8 @@ class m161104_114902_pictures extends Migration
         $this->createIndex('pictures_user', '{{%pictures}}', 'user_id');
         $this->addForeignKey('FK_pictures_user', '{{%pictures}}', 'user_id', '{{%user}}', 'id');
 
-        $this->createIndex('image_category', '{{%pictures}}', 'category_id');
-        $this->addForeignKey('FK_image_category', '{{%pictures}}', 'category_id', '{{%category}}', 'id');
+        $this->createIndex('pictures_category', '{{%pictures}}', 'category_id');
+        $this->addForeignKey('FK_pictures_category', '{{%pictures}}', 'category_id', '{{%category}}', 'id');
     }
 
     public function safeDown()
