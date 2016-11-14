@@ -37,6 +37,7 @@ GalleryAsset::register($this);
                 [
                     'label' => 'Добавление',
                     'url' => ['site/add-image'],
+                    'visible' => !Yii::$app->user->isGuest
                 ],
                 [
                     'label' => 'Профиль',
