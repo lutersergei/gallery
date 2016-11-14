@@ -7,7 +7,7 @@ use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
 $this->title = 'Загрузка в галерею';
-$this->registerJsFile('js/main.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile('js/category.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
 <h1>Загрузка файлов в галерею</h1>
 <p class="bg-danger">Максимальный размер файла 20Mb !</p>

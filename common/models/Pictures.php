@@ -114,7 +114,7 @@ class Pictures extends \yii\db\ActiveRecord
 
         if ($image->saveAs($pictureFilename))
         {
-            Image::thumbnail($pictureFilename, 200, 160)->save($thumbFilename, ['quality' => 100]);
+            Image::thumbnail($pictureFilename, 400, 400)->save($thumbFilename, ['quality' => 80]);
             return $image->name;
         }
         else
