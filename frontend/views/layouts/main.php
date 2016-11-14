@@ -32,26 +32,31 @@ GalleryAsset::register($this);
             'items' => [
                 [
                     'label' => 'Галерея',
-                    'url' => ['site/index'],
+                    'url' => Url::to(['site/index']),
                 ],
                 [
                     'label' => 'Добавление',
-                    'url' => ['site/add-image'],
+                    'url' => Url::to(['site/add-image']),
                     'visible' => !Yii::$app->user->isGuest
                 ],
                 [
                     'label' => 'Профиль',
-                    'url' => ['user/profile'],
+                    'items' => [
+                        ['label' => 'Мои файлы', 'url' => Url::to(['user/profile'])],
+                        '<li class="divider"></li>',
+                        ['label' => 'Настройки', 'url' => Url::to(['user/profile'])],
+                        ['label' => 'Bыход', 'url' => Url::to(['user/logout'])],
+                    ],
                     'visible' => !Yii::$app->user->isGuest
                 ],
                 [
                     'label' => 'Регистрация',
-                    'url' => ['user/signup'],
+                    'url' => Url::to(['user/signup']),
                     'visible' => Yii::$app->user->isGuest
                 ],
                 [
                     'label' => 'Bход',
-                    'url' => ['user/login'],
+                    'url' => Url::to(['user/login']),
                     'visible' => Yii::$app->user->isGuest
                 ],
             ],
