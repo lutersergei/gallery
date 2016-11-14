@@ -23,7 +23,8 @@ $this->title = 'Галерея';
                     <a class="thumbnail" href="<?= $image->getImagePath() ?>">
                         <img class="image-thumbnail" src="<?= $image->getThumbPath() //TODO Убрать вызов модели из вьюхи ?>" alt="<?= $image->description ?>">
                     </a>
-                    <p>Просмотры: <span class="badge"><?= $image->views ?></span></p>
+<!--                    <p>Просмотры: <span class="badge">--><?//= $image views ?><!--</span></p>-->
+                    <div class="input-group" id="raty"></div>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -31,7 +32,7 @@ $this->title = 'Галерея';
             <hr>
             <div class="col-sm-4 col-sm-push-4 col-sm-pull-4">
                 <div class="button_upload">
-                    <?= Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-plus img-circle text-primary') . 'Добавить', ['site/add-image'], ['class' => 'btn icon-btn btn-primary']) ?>
+                    <?= Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-plus img-circle text-primary') . 'Добавить', [Url::to(['site/add-image'])], ['class' => 'btn icon-btn btn-primary']) ?>
                 </div>
             </div>
         </div>
