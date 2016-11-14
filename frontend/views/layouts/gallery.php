@@ -10,8 +10,10 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\GalleryAsset;
 use common\widgets\Alert;
 use yii\helpers\Url;
+use frontend\assets\LightgalleryAsset;
 
 GalleryAsset::register($this);
+LightgalleryAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!doctype html>

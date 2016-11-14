@@ -17,11 +17,11 @@ $this->title = 'Галерея';
     </div>
     <div class="col-sm-9">
         <?= Alert::widget() ?>
-        <div class="row">
+        <div id="lightgallery" class="row gallery">
             <?php foreach ($images as $image):?>
                 <div class="thumbnail_new">
-                    <a class="thumbnail" href="<?= Url::to(['site/view', 'id' => $image->id]) ?>">
-                        <img class="imgage-thumbnail" src="<?= $image->getThumbPath() //TODO Убрать вызов модели из вьюхи ?>" alt="<?= $image->description ?>">
+                    <a class="thumbnail" href="<?= $image->getImagePath() ?>">
+                        <img class="image-thumbnail" src="<?= $image->getThumbPath() //TODO Убрать вызов модели из вьюхи ?>" alt="<?= $image->description ?>">
                     </a>
                     <p>Просмотры: <span class="badge"><?= $image->views ?></span></p>
                 </div>
