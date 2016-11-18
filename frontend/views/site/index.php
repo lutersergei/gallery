@@ -10,34 +10,26 @@ use yii\helpers\Url;
 use yii\bootstrap\Html;
 use common\widgets\Alert;
 $this->title = 'Галерея';
+
+//foreach ($images as $image)
+//{
+//    var_dump($image->average);
+//    echo "<br>";
+//    foreach ($image->ratings as $rating)
+//    {
+//        var_dump($rating->toArray());
+//        echo "<br>";
+//    }
+//    echo "<br>";
+//}
 ?>
 <div class="row">
-    <div class="col-sm-9">
-        <h1 class="title">Image Gallery</h1>
-    </div>
-    <div class="col-sm-9">
-        <?= Alert::widget() ?>
-        <div id="lightgallery" class="row gallery">
-            <?php foreach ($images as $image):?>
-                <div class="thumbnail_new">
-                    <a class="thumbnail" href="<?= $image->getImagePath() ?>">
-                        <img class="image-thumbnail" src="<?= $image->getThumbPath() //TODO Убрать вызов модели из вьюхи ?>" alt="<?= $image->description ?>">
-                    </a>
-<!--                    <p>Просмотры: <span class="badge">--><?//= $image views ?><!--</span></p>-->
-                    <div class="input-group" id="raty"></div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-        <div class="row">
-            <hr>
-            <div class="col-sm-4 col-sm-push-4 col-sm-pull-4">
-                <div class="button_upload">
-                    <?= Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-plus img-circle text-primary') . 'Добавить', [Url::to(['site/add-image'])], ['class' => 'btn icon-btn btn-primary']) ?>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-sm-9">
+            <h1 class="title">Image Gallery</h1>
         </div>
     </div>
-    <aside class="col-sm-3">
+    <aside class="col-sm-3 col-sm-push-9">
         <h3>Категории</h3>
         <div class="list-group">
             <a href="<?= Url::to(['site/index']) ?>" class="list-group-item">
@@ -73,4 +65,35 @@ $this->title = 'Галерея';
             endforeach;?>
         </div>
     </aside>
+    <div class="col-sm-9 col-sm-pull-3">
+        <?= Alert::widget() ?>
+        <div id="lightgallery" class="row gallery">
+            <?php foreach ($images as $image):
+                $userRate = null;
+                foreach ($image->ratings as $rating)
+                {
+                    if ($rating->user_id === Yii::$app->user->id)
+                    {
+                        $userRate = $rating->rating;
+                        break;
+                    }
+                }
+                ?>
+                <div class="thumbnail_new">
+                    <a class="thumbnail" href="<?= $image->getImagePath() ?>">
+                        <img class="image-thumbnail" src="<?= $image->getThumbPath() //TODO Убрать вызов модели из вьюхи ?>" alt="<?= $image->description ?>">
+                    </a>
+                    <div class="input-group raty" data-rating="<?= $image->average ?>" data-userrate="<?= $userRate ?>" data-id="<?= $image->id ?>"></div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <div class="row">
+            <hr>
+            <div class="col-sm-4 col-sm-push-4 col-sm-pull-4">
+                <div class="button_upload">
+                    <?= Html::a(Html::icon('glyphicon btn-glyphicon glyphicon-plus img-circle text-primary') . 'Добавить', [Url::to(['site/add-image'])], ['class' => 'btn icon-btn btn-primary']) ?>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
