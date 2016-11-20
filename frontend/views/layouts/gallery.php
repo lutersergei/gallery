@@ -31,6 +31,7 @@ LightgalleryAsset::register($this);
     <div class="row">
         <?php
         echo Nav::widget([
+            'activateParents' => true,
             'items' => [
                 [
                     'label' => 'Галерея',
@@ -49,7 +50,6 @@ LightgalleryAsset::register($this);
                         ['label' => 'Настройки', 'url' => ['user/profile']],
                         ['label' => 'Bыход', 'url' => ['user/logout']],
                     ],
-                    'active'=>\Yii::$app->controller->id == 'user',
                     'visible' => !Yii::$app->user->isGuest
                 ],
                 [
