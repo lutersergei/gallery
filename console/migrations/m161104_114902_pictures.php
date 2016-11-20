@@ -18,7 +18,6 @@ class m161104_114902_pictures extends Migration
             'name' => $this->string()->notNull()->unique(),
             'category_id' => $this->integer()->notNull(),
             'description' => $this->string()->defaultValue(null),
-            'views' => $this->integer()->defaultValue(0),
             'rating' => $this->integer()->defaultValue(0),
             'created_at' => $this->timestamp(),
         ], $tableOptions);
