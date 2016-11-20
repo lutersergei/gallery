@@ -1,7 +1,7 @@
 <?php
 namespace frontend\models;
 
-use common\models\Image;
+use common\models\Pictures;
 use yii\base\Model;
 use yii\web\UploadedFile;
 use Yii;
@@ -41,11 +41,11 @@ class ImageUploadForm extends Model
     }
 
     /**
-     * @return Image|null
+     * @return Pictures|null
      */
     public function pictureUpload()
     {
-        $image = new Image();
+        $image = new Pictures();
         $image->name = $this->imageFile;
         $image->category_id = $this->category_id;
         $image->description = $this->description;

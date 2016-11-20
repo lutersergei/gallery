@@ -9,7 +9,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
-use common\models\Image;
+use common\models\Pictures;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
@@ -21,7 +21,6 @@ use yii\web\NotFoundHttpException;
  */
 class UserController extends Controller
 {
-    public $layout = 'gallery.php';
     /**
      * @inheritdoc
      */
@@ -30,7 +29,7 @@ class UserController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'profile'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -38,7 +37,7 @@ class UserController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'profile'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -47,7 +46,6 @@ class UserController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
                     'reset' => ['post'],
                 ],
             ],
@@ -76,20 +74,6 @@ class UserController extends Controller
     public function actionProfile()
     {
         return $this->render('profile');
-    }
-
-    /**
-     * @return mixed
-     * @throws NotFoundHttpException
-     */
-    public function actionReset()
-    {
-        if (Image::deleteAll())
-        {
-            Yii::$app->session->setFlash('success', 'БД успешно очищена');
-            return $this->redirect(['site/index']);
-        }
-        else throw new NotFoundHttpException('БД уже очищена или произошла ошибка');
     }
 
     /**

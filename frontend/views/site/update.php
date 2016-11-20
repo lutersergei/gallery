@@ -1,6 +1,7 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $image \common\models\Image */
+/* @var $image \common\models\Pictures */
+/* @var $categories \common\models\Category[] */
 use yii\helpers\Url;
 use yii\bootstrap\Html;
 use yii\bootstrap\ActiveForm;
@@ -11,12 +12,16 @@ $this->title = 'Редактирование';
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($image, 'category')->dropDownList($categories)->label('Изменить категорию', [
+        'class' => 'bg-success'
+    ]) ?>
+
     <?= $form->field($image, 'description')->textarea(['rows' => 6])->label('Изменить описание', [
         'class' => 'bg-success'
     ]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Html::icon('glyphicon btn-glyphicon glyphicon-edit img-circle text-success') . 'Update', [
+        <?= Html::submitButton(Html::icon('glyphicon btn-glyphicon glyphicon-edit img-circle text-success') . 'Изменить', [
             'class' => 'btn icon-btn btn-success'
         ]) ?>
     </div>

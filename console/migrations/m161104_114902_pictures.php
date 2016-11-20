@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m161104_114902_image extends Migration
+class m161104_114902_pictures extends Migration
 {
     public function safeUp()
     {
@@ -12,30 +12,29 @@ class m161104_114902_image extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%image}}', [
+        $this->createTable('{{%pictures}}', [
             'id' => $this->primaryKey(),
-            'user_id' => $this->integer()->notNull(),
+            'user_id' => $this->integer(),
             'name' => $this->string()->notNull()->unique(),
             'category_id' => $this->integer()->notNull(),
             'description' => $this->string()->defaultValue(null),
-            'views' => $this->integer()->defaultValue(0),
             'rating' => $this->integer()->defaultValue(0),
             'created_at' => $this->timestamp(),
         ], $tableOptions);
 
-        $this->createIndex('image_user', '{{%image}}', 'user_id');
-        $this->addForeignKey('FK_image_user', '{{%image}}', 'user_id', '{{%user}}', 'id');
+        $this->createIndex('pictures_user', '{{%pictures}}', 'user_id');
+        $this->addForeignKey('FK_pictures_user', '{{%pictures}}', 'user_id', '{{%user}}', 'id');
 
-        $this->createIndex('image_category', '{{%image}}', 'category_id');
-        $this->addForeignKey('FK_image_category', '{{%image}}', 'category_id', '{{%category}}', 'id');
+        $this->createIndex('pictures_category', '{{%pictures}}', 'category_id');
+        $this->addForeignKey('FK_pictures_category', '{{%pictures}}', 'category_id', '{{%category}}', 'id');
     }
 
     public function safeDown()
     {
-        $this->dropForeignKey('FK_image_user', '{{%image}}');
-        $this->dropForeignKey('FK_image_category', '{{%image}}');
+        $this->dropForeignKey('FK_pictures_user', '{{%pictures}}');
+        $this->dropForeignKey('FK_pictures_category', '{{%pictures}}');
 
-        $this->dropTable('{{%image}}');
+        $this->dropTable('{{%pictures}}');
     }
 
 }

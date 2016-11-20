@@ -13,9 +13,12 @@ class GalleryAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/style.css',
-        'https://fonts.googleapis.com/css?family=Comfortaa:400,300&subset=latin,cyrillic'
+        'https://fonts.googleapis.com/css?family=Comfortaa:400,300&subset=latin,cyrillic',
+        'css/jquery.raty.css'
     ];
     public $js = [
+        'js/jquery.raty.js',
+        'js/main.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

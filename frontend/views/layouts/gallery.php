@@ -10,8 +10,10 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\GalleryAsset;
 use common\widgets\Alert;
 use yii\helpers\Url;
+use frontend\assets\LightgalleryAsset;
 
 GalleryAsset::register($this);
+LightgalleryAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!doctype html>
@@ -27,45 +29,45 @@ GalleryAsset::register($this);
 <?php $this->beginBody() ?>
 <div class="container">
     <div class="row">
-        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-            <?php
-            echo Nav::widget([
-                'items' => [
-                    [
-                        'label' => 'Gallery',
-                        'url' => ['site/index'],
-                    ],
-                    [
-                        'label' => 'Add Image',
-                        'url' => ['site/add-image'],
-                    ],
-                    [
-                        'label' => 'Setting',
-                        'url' => ['user/profile'],
-                        'visible' => !Yii::$app->user->isGuest
-                    ],
-                    [
-                        'label' => 'Sign Up',
-                        'url' => ['user/signup'],
-                        'visible' => Yii::$app->user->isGuest
-                    ],
-                    [
-                        'label' => 'Login',
-                        'url' => ['user/login'],
-                        'visible' => Yii::$app->user->isGuest
-                    ],
+        <?php
+        echo Nav::widget([
+            'activateParents' => true,
+            'items' => [
+                [
+                    'label' => 'Галерея',
+                    'url' => ['site/index'],
                 ],
-                'options' => ['class' =>'nav nav-tabs'],
-            ]);
-            ?>
-        </div>
+                [
+                    'label' => 'Добавление',
+                    'url' => ['site/add-image'],
+                    'visible' => !Yii::$app->user->isGuest
+                ],
+                [
+                    'label' => 'Профиль',
+                    'items' => [
+                        ['label' => 'Мои файлы', 'url' => ['user/files']],
+                        '<li class="divider"></li>',
+                        ['label' => 'Настройки', 'url' => ['user/profile']],
+                        ['label' => 'Bыход', 'url' => ['user/logout']],
+                    ],
+                    'visible' => !Yii::$app->user->isGuest
+                ],
+                [
+                    'label' => 'Регистрация',
+                    'url' => ['user/signup'],
+                    'visible' => Yii::$app->user->isGuest
+                ],
+                [
+                    'label' => 'Bход',
+                    'url' => ['user/login'],
+                    'visible' => Yii::$app->user->isGuest
+                ],
+            ],
+            'options' => ['class' =>'nav nav-tabs'],
+        ]);
+        ?>
     </div>
-    <div class="row">
-        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-            <?= Alert::widget() ?>
-            <?= $content ?>
-        </div>
-    </div>
+    <?= $content ?>
 </div>
 <?php $this->endBody() ?>
 </body>

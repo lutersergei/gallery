@@ -2,26 +2,24 @@
 namespace frontend\controllers;
 
 use common\models\Category;
+use common\models\User;
 use frontend\models\ImageUploadForm;
 use Yii;
-use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\Image;
+use common\models\Pictures;
 use frontend\models\ContactForm;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 use yii\web\ServerErrorHttpException;
-
+use dosamigos\transliterator\TransliteratorHelper;
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
-    public $layout = 'gallery.php';
-
     /**
      * @inheritdoc
      */
@@ -30,7 +28,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'add-image'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -38,7 +36,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'add-image'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -74,13 +72,32 @@ class SiteController extends Controller
     /**
      * Displays homepage.
      *
+     * @param null Category
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($cat = null, $user = null)
     {
-        $images = Image::find()->with('category')->all();
+        if ($cat)
+        {
+            $images = Pictures::find()->where(['category_id' => $cat])->all();
+        }
+        elseif ($user)
+        {
+            $images = Pictures::find()->where(['user_id' => $user])->all();
+        }
+        else
+        {
+            $images = Pictures::getPicturesWithAverage()->all();
+        }
+        $count_pictures = Pictures::find()->count();
+        $this->layout = 'gallery.php';
+        $categories = Category::getCategoriesWithCount()->all();
+        $users = User::getUsersWithCount()->all();
         return $this->render('index', [
             'images' => $images,
+            'categories' => $categories,
+            'count_pictures' => $count_pictures,
+            'users' => $users,
         ]);
     }
 
@@ -95,9 +112,8 @@ class SiteController extends Controller
     public function actionView($id = null)
     {
         if ($id) {
-            $image = Image::find()->where(['id' => $id])->with('category')->one();
+            $image = Pictures::getOneWithIncrement($id);
             if ($image) {
-                $image->countView();
                 return $this->render('view', [
                     'image' => $image,
                 ]);
@@ -121,7 +137,8 @@ class SiteController extends Controller
         $post = Yii::$app->request->post('ImageUploadForm');
         if (count($post)) {
             $image = UploadedFile::getInstance($model, 'imageFile');
-            $imageName = Image::saveImage($image);
+            $image->name = TransliteratorHelper::process($image->name);
+            $imageName = Pictures::saveImage($image);
             if ($imageName) {
                 $model->description = $post['description'];
                 $model->category_id = $post['category_id'];
@@ -139,7 +156,7 @@ class SiteController extends Controller
         }
 
 //        $type = FileHelper::getMimeType($picture->tempName); //TODO применить проверку на mime type
-        $categories = Category::find()->select(['category', 'id'])->indexBy('id')->column();
+        $categories = Category::find()->select(['category', 'id'])->indexBy('id')->orderBy('id')->column();
         return $this->render('upload', [
             'model' => $model,
             'categories' => $categories,
@@ -159,6 +176,23 @@ class SiteController extends Controller
     }
 
     /**
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionReset()
+    {
+        if (Pictures::deleteAll())
+        {
+            if (FileController::actionClearFolders())
+            {
+                Yii::$app->session->setFlash('success', 'БД и папки успешно очищены');
+                return $this->redirect(['site/index']);
+            }
+        }
+        else throw new NotFoundHttpException('БД уже очищена или произошла ошибка');
+    }
+
+    /**
      * Updates an existing Page model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
@@ -167,12 +201,13 @@ class SiteController extends Controller
     public function actionUpdate($id)
     {
         $image = $this->findImage($id);
-
+        $categories = Category::find()->select(['category', 'id'])->indexBy('id')->column();
         if ($image->load(Yii::$app->request->post()) && $image->save()) {
             return $this->redirect(['view', 'id' => $image->id]);
         } else {
             return $this->render('update', [
                 'image' => $image,
+                'categories' => $categories,
             ]);
         }
     }
@@ -181,12 +216,12 @@ class SiteController extends Controller
      * Finds the Image model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Image the loaded model
+     * @return Pictures the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findImage($id)
     {
-        if (($model = Image::findOne($id)) !== null) {
+        if (($model = Pictures::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('Запрашиваемая страница не найдена.');

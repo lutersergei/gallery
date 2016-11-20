@@ -8,7 +8,7 @@ use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
 /**
- * User model
+ * This is the model class for table "{{%user}}".
  *
  * @property integer $id
  * @property string $username
@@ -19,13 +19,18 @@ use yii\web\IdentityInterface;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $count_pictures
  * @property string $password write-only password
+ *
+ * @property Pictures[] $pictures
+ * @property Ratings[] $ratings
  */
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 
+    public $count_pictures;
 
     /**
      * @inheritdoc
@@ -185,5 +190,35 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public static function getUsersWithCount()
+    {
+        $users = self::find()
+            ->select(['user.username, user.id, COUNT(pictures.id) AS count_pictures'])
+            ->leftJoin(Pictures::tableName(), 'pictures.user_id = user.id')
+            ->groupBy(['user.id'])
+            ->orderBy('count_pictures DESC')
+            ->limit(5);
+        return $users;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPictures()
+    {
+        return $this->hasMany(Pictures::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRatings()
+    {
+        return $this->hasMany(Ratings::className(), ['user_id' => 'id']);
     }
 }

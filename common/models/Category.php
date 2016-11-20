@@ -10,10 +10,13 @@ use Yii;
  * @property integer $id
  * @property string $category
  *
- * @property Image[] $images
+ * @property Pictures[] $pictures
+ * @property integer $count_pictures
  */
 class Category extends \yii\db\ActiveRecord
 {
+    public $count_pictures;
+
     /**
      * @inheritdoc
      */
@@ -30,6 +33,7 @@ class Category extends \yii\db\ActiveRecord
         return [
             [['category'], 'required'],
             [['category'], 'string', 'max' => 15],
+            [['category'], 'unique'],
         ];
     }
 
@@ -47,8 +51,21 @@ class Category extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getImages()
+    public function getPictures()
     {
-        return $this->hasMany(Image::className(), ['category_id' => 'id']);
+        return $this->hasMany(Pictures::className(), ['category_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public static function getCategoriesWithCount()
+    {
+        $cat = self::find()
+            ->select(['category.*, COUNT(pictures.id) AS count_pictures'])
+            ->leftJoin(Pictures::tableName(), 'pictures.category_id = category.id')
+            ->groupBy(['category.id'])
+            ->orderBy('count_pictures DESC');
+        return $cat;
     }
 }

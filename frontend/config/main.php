@@ -8,6 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-frontend',
+    'language' => 'ru',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
@@ -18,6 +19,7 @@ return [
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
+            'loginUrl' => 'user/login',
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
         ],
         'session' => [
@@ -41,7 +43,9 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '<action:view|delete|update>/<id:\d+>' => 'site/<action>',
-                '<action:profile>' => 'user/<action>',
+                '<action:profile|login|signup|logout>' => 'user/<action>',
+                'category/<cat:\d+>' => 'site/index',
+                'user/<user:\d+>' => 'site/index',
                 '<action>' => 'site/<action>',
             ],
         ],

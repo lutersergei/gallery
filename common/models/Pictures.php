@@ -4,32 +4,38 @@ namespace common\models;
 
 use Yii;
 use yii\web\UploadedFile;
+use yii\imagine\Image;
+use frontend\controllers\FileController;
 
 /**
- * This is the model class for table "{{%image}}".
+ * This is the model class for table "{{%pictures}}".
  *
  * @property integer $id
  * @property integer $user_id
  * @property string $name
  * @property integer $category_id
  * @property string $description
- * @property integer $views
  * @property integer $rating
  * @property string $created_at
  *
  * @property Category $category
  * @property User $user
+ * @property Ratings[] $ratings
+ * @property integer $average
  */
-class Image extends \yii\db\ActiveRecord
+class Pictures extends \yii\db\ActiveRecord
 {
     const IMAGE_DIR = '/upload/';
+    const THUMB_DIR = '/thumbnails/';
+
+    public $average;
 
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%image}}';
+        return '{{%pictures}}';
     }
 
     /**
@@ -38,8 +44,8 @@ class Image extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'name', 'category_id'], 'required'],
-            [['user_id', 'category_id', 'views', 'rating'], 'integer'],
+            [['name', 'category_id'], 'required'],
+            [['user_id', 'category_id', 'rating'], 'integer'],
             [['created_at'], 'safe'],
             [['name', 'description'], 'string', 'max' => 255],
             [['name'], 'unique'],
@@ -59,7 +65,6 @@ class Image extends \yii\db\ActiveRecord
             'name' => 'Name',
             'category_id' => 'Category ID',
             'description' => 'Description',
-            'views' => 'Views',
             'rating' => 'Rating',
             'created_at' => 'Created At',
         ];
@@ -82,11 +87,36 @@ class Image extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRatings()
+    {
+        return $this->hasMany(Ratings::className(), ['picture_id' => 'id']);
+    }
+
+    public static function getPicturesWithAverage()
+    {
+        return self::find()
+            ->select(['pictures.*, avg(ratings.rating) AS average'])
+            ->leftJoin('ratings', 'ratings.picture_id = pictures.id')
+            ->groupBy('pictures.id')
+            ->with('ratings');
+    }
+
+    /**
      * @return string Full path to image
      */
-    public function getPath()
+    public function getImagePath()
     {
         return self::IMAGE_DIR . $this->name;
+    }
+
+    /**
+     * @return string Full path to image
+     */
+    public function getThumbPath()
+    {
+        return self::THUMB_DIR . $this->name;
     }
 
     /**
@@ -95,12 +125,15 @@ class Image extends \yii\db\ActiveRecord
      */
     public static function saveImage($image)
     {
-        $image_dir = \Yii::getAlias('@webroot');
+        $front= \Yii::getAlias('@webroot');
 
-        $pictureFilename = $image_dir . '/' . 'upload' . '/' . $image->name;
+        $pictureFilename = $front . self::IMAGE_DIR . $image->name;
+
+        $thumbFilename = $front . self::THUMB_DIR . $image->name;
 
         if ($image->saveAs($pictureFilename))
         {
+            Image::thumbnail($pictureFilename, 400, 400)->save($thumbFilename, ['quality' => 80]);
             return $image->name;
         }
         else
@@ -109,12 +142,33 @@ class Image extends \yii\db\ActiveRecord
         }
     }
 
-    /**
-     * Increment count of view
-     */
-    public function countView()
+    public static function getOneWithIncrement($id)
     {
-        $this->views++;
-        $this->save();
+        $image = self::find()->where(['id' => $id])->with('category')->one();
+//        $image->updateCounters(['views' => 1]);
+        return $image;
+    }
+
+//    /**
+//     * Increment count of view
+//     */
+//    public function countView()
+//    {
+//        $this->views++;
+//        $this->save();
+//    }
+
+    /**
+     * Delete image and thumb before delete from database
+     *
+     * @return bool
+     */
+    public function beforeDelete()
+    {
+        if (parent::beforeDelete() && FileController::actionDelete($this->name)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
