@@ -13,7 +13,6 @@ $(document).ready(function () {
 
     //When you select this option, you show modal window
     select_cat.change(function () {
-       console.log(select_cat.val());
         if (select_cat.val() == -1)
         {
             $('#myModal').modal('show');
@@ -26,7 +25,6 @@ $(document).ready(function () {
         new_option = {
             content: content
         };
-        console.log(new_option);
         $.ajax({
             url: "/category/add",
             type: "POST",
