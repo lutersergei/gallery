@@ -8,24 +8,27 @@ use yii\imagine\Image;
 use frontend\controllers\FileController;
 
 /**
- * This is the model class for table "{{%image}}".
+ * This is the model class for table "{{%pictures}}".
  *
  * @property integer $id
  * @property integer $user_id
  * @property string $name
  * @property integer $category_id
  * @property string $description
- * @property integer $views
  * @property integer $rating
  * @property string $created_at
  *
  * @property Category $category
  * @property User $user
+ * @property Ratings[] $ratings
+ * @property integer $average
  */
 class Pictures extends \yii\db\ActiveRecord
 {
     const IMAGE_DIR = '/upload/';
     const THUMB_DIR = '/thumbnails/';
+
+    public $average;
 
     /**
      * @inheritdoc
@@ -42,7 +45,7 @@ class Pictures extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'category_id'], 'required'],
-            [['user_id', 'category_id', 'views', 'rating'], 'integer'],
+            [['user_id', 'category_id', 'rating'], 'integer'],
             [['created_at'], 'safe'],
             [['name', 'description'], 'string', 'max' => 255],
             [['name'], 'unique'],
@@ -62,7 +65,6 @@ class Pictures extends \yii\db\ActiveRecord
             'name' => 'Name',
             'category_id' => 'Category ID',
             'description' => 'Description',
-            'views' => 'Views',
             'rating' => 'Rating',
             'created_at' => 'Created At',
         ];
@@ -82,6 +84,23 @@ class Pictures extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRatings()
+    {
+        return $this->hasMany(Ratings::className(), ['picture_id' => 'id']);
+    }
+
+    public static function getPicturesWithAverage()
+    {
+        return self::find()
+            ->select(['pictures.*, avg(ratings.rating) AS average'])
+            ->leftJoin('ratings', 'ratings.picture_id = pictures.id')
+            ->groupBy('pictures.id')
+            ->with('ratings');
     }
 
     /**
@@ -126,18 +145,18 @@ class Pictures extends \yii\db\ActiveRecord
     public static function getOneWithIncrement($id)
     {
         $image = self::find()->where(['id' => $id])->with('category')->one();
-        $image->updateCounters(['views' => 1]);
+//        $image->updateCounters(['views' => 1]);
         return $image;
     }
 
-    /**
-     * Increment count of view
-     */
-    public function countView()
-    {
-        $this->views++;
-        $this->save();
-    }
+//    /**
+//     * Increment count of view
+//     */
+//    public function countView()
+//    {
+//        $this->views++;
+//        $this->save();
+//    }
 
     /**
      * Delete image and thumb before delete from database

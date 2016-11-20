@@ -87,7 +87,7 @@ class SiteController extends Controller
         }
         else
         {
-            $images = Pictures::find()->all();
+            $images = Pictures::getPicturesWithAverage()->all();
         }
         $count_pictures = Pictures::find()->count();
         $this->layout = 'gallery.php';

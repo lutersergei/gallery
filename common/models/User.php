@@ -8,7 +8,7 @@ use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
 /**
- * User model
+ * This is the model class for table "{{%user}}".
  *
  * @property integer $id
  * @property string $username
@@ -21,6 +21,9 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  * @property integer $count_pictures
  * @property string $password write-only password
+ *
+ * @property Pictures[] $pictures
+ * @property Ratings[] $ratings
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -201,5 +204,21 @@ class User extends ActiveRecord implements IdentityInterface
             ->orderBy('count_pictures DESC')
             ->limit(5);
         return $users;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPictures()
+    {
+        return $this->hasMany(Pictures::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRatings()
+    {
+        return $this->hasMany(Ratings::className(), ['user_id' => 'id']);
     }
 }
