@@ -94,9 +94,12 @@ class Pictures extends \yii\db\ActiveRecord
         return $this->hasMany(Ratings::className(), ['picture_id' => 'id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public static function getPicturesWithAverage()
     {
-        return self::find()
+        return static::find()
             ->select(['pictures.*, avg(ratings.rating) AS average'])
             ->leftJoin('ratings', 'ratings.picture_id = pictures.id')
             ->groupBy('pictures.id')
@@ -104,11 +107,24 @@ class Pictures extends \yii\db\ActiveRecord
     }
 
     /**
+     * @param $pictureId
+     * @return array|null|\yii\db\ActiveRecord
+     */
+    public static function getAverage($pictureId)
+    {
+        return static::find()
+            ->select(['avg(ratings.rating) AS average'])
+            ->leftJoin('ratings', 'ratings.picture_id = pictures.id')
+            ->where(['pictures.id' => $pictureId])
+            ->one();
+    }
+
+    /**
      * @return string Full path to image
      */
     public function getImagePath()
     {
-        return self::IMAGE_DIR . $this->name;
+        return static::IMAGE_DIR . $this->name;
     }
 
     /**
@@ -116,7 +132,7 @@ class Pictures extends \yii\db\ActiveRecord
      */
     public function getThumbPath()
     {
-        return self::THUMB_DIR . $this->name;
+        return static::THUMB_DIR . $this->name;
     }
 
     /**
