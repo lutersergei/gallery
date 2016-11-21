@@ -69,4 +69,48 @@ class Ratings extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    /**
+     * @param null $score Rating
+     * @param null $pictureId Image Id
+     * @return bool
+     */
+    public static function setRating($score = null, $pictureId = null)
+    {
+        $user = Yii::$app->user->id;
+        if ($score && $pictureId)
+        {
+            $rate = static::findOne(['user_id' => $user, 'picture_id' => $pictureId]);
+            if ($rate)
+            {
+                $rate->rating = $score;
+                if ($rate->update())
+                {
+                    return true;
+                }
+                return false;
+            }
+            else
+            {
+                $rate = new Ratings();
+                $rate->rating = $score;
+                $rate->picture_id = $pictureId;
+                $rate->user_id = $user;
+                if ($rate->save())
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+        if (!$score && $pictureId)
+        {
+            $rate = static::findOne(['user_id' => $user, 'picture_id' => $pictureId]);
+            if ($rate->delete())
+            {
+                return true;
+            }
+            return false;
+        }
+    }
 }
