@@ -80,11 +80,11 @@ class SiteController extends Controller
     {
         if ($cat)
         {
-            $images = Pictures::find()->where(['category_id' => $cat])->all();
+            $images = Pictures::getPicturesWithAverage()->where([Pictures::tableName() . '.category_id' => $cat])->all();
         }
         elseif ($user)
         {
-            $images = Pictures::find()->where(['user_id' => $user])->all();
+            $images = Pictures::getPicturesWithAverage()->where([Pictures::tableName() . '.user_id' => $user])->all();
         }
         else
         {
