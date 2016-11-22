@@ -158,22 +158,6 @@ class Pictures extends \yii\db\ActiveRecord
         }
     }
 
-    public static function getOneWithIncrement($id)
-    {
-        $image = self::find()->where(['id' => $id])->with('category')->one();
-//        $image->updateCounters(['views' => 1]);
-        return $image;
-    }
-
-//    /**
-//     * Increment count of view
-//     */
-//    public function countView()
-//    {
-//        $this->views++;
-//        $this->save();
-//    }
-
     /**
      * Delete image and thumb before delete from database
      *
