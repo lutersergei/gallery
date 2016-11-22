@@ -12,8 +12,6 @@ class LightgalleryAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-//        'lightgallery/dist/css/lg-fb-comment-box.min.css',
-//        'lightgallery/dist/css/lg-transitions.min.css',
         'lightgallery/dist/css/lightgallery.min.css'
     ];
     public $js = [
