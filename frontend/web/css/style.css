@@ -7,22 +7,14 @@
     color: rgba(68, 68, 68, 0.89);
     margin-bottom: 30px;
 }
-.image-thumbnail {
-    /*max-height: 200px;*/
-}
+
 .thumbnail_new {
     display: inline-block;
     vertical-align: top;
     margin-top: 20px;
     padding: 0 10px;
-    /*max-width: 250px;*/
-    /**/
     max-width: 24%;
-    /*min-width: 150px;*/
 
-}
-.row .gallery{
-    /*text-align: center;*/
 }
 
 .thumbnail {
@@ -33,7 +25,12 @@
     position: relative;
 }
 
+.thumbnail:hover {
+    box-shadow: 0 0 25px -2px #000;
+}
+
 .rating{
+    font-family: 'Comfortaa', cursive;
     position: absolute;
     top: 10px;
     left: 10px;
@@ -47,7 +44,6 @@
         margin-top: 20px;
         padding: 0 10px;
         max-width: 32%;
-        /*max-width: 200px;*/
         min-width: 170px;
     }
 }

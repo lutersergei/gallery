@@ -24,11 +24,11 @@ $this->title = 'Галерея';
 //}
 ?>
 <div class="row">
-    <div class="row">
-        <div class="col-sm-9">
-            <h1 class="title">Image Gallery</h1>
-        </div>
+    <div class="col-sm-9">
+        <h1 class="title">Image Gallery</h1>
     </div>
+</div>
+<div class="row">
     <aside class="col-sm-3 col-sm-push-9">
         <h3>Категории</h3>
         <div class="list-group">
