@@ -24,7 +24,7 @@ class ImageUploadForm extends Model
         return [
             [['description'], 'string', 'max' => 255],
             [['description'], 'trim'],
-            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'maxFiles' => 5],
         ];
     }
 
@@ -41,7 +41,7 @@ class ImageUploadForm extends Model
     }
 
     /**
-     * @return Pictures|null
+     * @return bool
      */
     public function pictureUpload()
     {
@@ -51,6 +51,6 @@ class ImageUploadForm extends Model
         $image->description = $this->description;
         $image->user_id = Yii::$app->user->id;
 
-        return $image->save() ? $image : null;
+        return $image->save() ? true : null;
     }
 }
