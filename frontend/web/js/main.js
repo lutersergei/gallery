@@ -7,23 +7,21 @@ $(document).ready(function() {
     //input ratings for the images and handling Click
     function setRating() {
         starbars.each(function (i, elem) {
-            var rating, starType;
+            var rating;
 
             if($(elem).data('userrate'))
             {
                 rating = $(elem).data('userrate');
                 cancelBtn = true;
-                starType = 'img';
             }
             else
             {
                 rating = $(elem).data('rating');
                 cancelBtn = false;
-                starType = 'i';
             }
 
             $(elem).raty({
-                starType: starType,
+                starType: 'i',
                 path: '/images/',
                 cancel: cancelBtn,
                 cancelHint: 'удалить оценку',
@@ -32,6 +30,12 @@ $(document).ready(function() {
                     sendRating(score, elem);
                 }
             });
+        });
+
+        starbars.each(function (i, elem) {
+            if($(elem).data('userrate')){
+                $(elem).addClass('gold')
+        }
         });
     }
 

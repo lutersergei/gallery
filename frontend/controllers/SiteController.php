@@ -136,26 +136,34 @@ class SiteController extends Controller
     {
         $model = new ImageUploadForm();
         $post = Yii::$app->request->post('ImageUploadForm');
-        if (count($post)) {
-            $image = UploadedFile::getInstance($model, 'imageFile');
-            $image->name = TransliteratorHelper::process($image->name);
-            $imageName = Pictures::saveImage($image);
-            if ($imageName) {
-                $model->description = $post['description'];
-                $model->category_id = $post['category_id'];
-                $model->imageFile = $imageName;
-                if ($model->pictureUpload()) {
-                    Yii::$app->session->setFlash('success', "Изображение $imageName успешно загружено!");
-                    return $this->refresh();
-                } else {
-                    throw new ServerErrorHttpException('Не удалось сохранить изображение');
+        if (count($post))
+        {
+            //Get an array of uploaded files $images[]
+            $images = UploadedFile::getInstances($model, 'imageFile');
+            foreach ($images as $image)
+            {
+                //Transliteration of the filename
+                $image->name = TransliteratorHelper::process($image->name);
+                //Try to save the file to disk and thumbnail. Return filename
+                $imageName = Pictures::saveImage($image);
+                if ($imageName)
+                {
+                    //Load data from POST and filename
+                    $model->description = $post['description'];
+                    $model->category_id = $post['category_id'];
+                    $model->imageFile = $imageName;
+                    //Try to write information to the database
+                    if (!$model->pictureUpload())
+                    {
+                        throw new ServerErrorHttpException('Не удалось сохранить изображение');
+                    }
                 }
-            } else {
-                throw new ServerErrorHttpException('Не удалось загрузить изображение');
+                else throw new ServerErrorHttpException('Не удалось загрузить изображение');
             }
 
+            Yii::$app->session->setFlash('success', "Успешная загрузка!");
+            return $this->refresh();
         }
-
 //        $type = FileHelper::getMimeType($picture->tempName); //TODO применить проверку на mime type
         $categories = Category::find()->select(['category', 'id'])->indexBy('id')->orderBy('id')->column();
         return $this->render('upload', [
