@@ -8,25 +8,8 @@
     margin-bottom: 30px;
 }
 
-.thumbnail_new {
-    display: inline-block;
-    vertical-align: top;
-    margin-top: 20px;
-    padding: 0 10px;
-    max-width: 24%;
-
-}
-
-.thumbnail {
-    border: none;
-    padding: 0px;
-    margin-bottom: 10px;
-    box-shadow: 0 0 8px -1px #000;
-    position: relative;
-}
-
-.thumbnail:hover {
-    box-shadow: 0 0 25px -2px #000;
+.picture:hover {
+    box-shadow: 0 0 15px -1px #000;
 }
 
 .rating{
