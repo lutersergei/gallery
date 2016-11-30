@@ -76,6 +76,15 @@ class UserController extends Controller
         return $this->render('profile');
     }
 
+    public function actionFiles()
+    {
+        $user = Yii::$app->user->id;
+        $images = Pictures::find()->where(['user_id' => $user])->all();
+        return $this->render('files', [
+            'images' => $images,
+        ]);
+    }
+
     /**
      * Logs in a user.
      *
