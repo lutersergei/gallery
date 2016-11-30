@@ -19,7 +19,7 @@ class GalleryAsset extends AssetBundle
     ];
     public $js = [
         'js/jquery.raty.js',
-        'js/jquery.justifiedGallery.min.js',
+        'js/jquery.justifiedGallery.js',
         'js/main.js'
     ];
     public $depends = [
