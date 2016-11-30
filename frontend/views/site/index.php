@@ -11,6 +11,17 @@ use yii\bootstrap\Html;
 use common\widgets\Alert;
 $this->title = 'Галерея';
 
+//foreach ($images as $image)
+//{
+//    var_dump($image->average);
+//    echo "<br>";
+//    foreach ($image->ratings as $rating)
+//    {
+//        var_dump($rating->toArray());
+//        echo "<br>";
+//    }
+//    echo "<br>";
+//}
 ?>
 <div class="row">
     <div class="col-sm-9">
@@ -56,7 +67,8 @@ $this->title = 'Галерея';
     </aside>
     <div class="col-sm-9 col-sm-pull-3">
         <?= Alert::widget() ?>
-        <div id="gallery" class="row gallery">
+
+        <div id="gallery" class="gallery">
             <?php foreach ($images as $image):
                 $userRate = null;
                 foreach ($image->ratings as $rating)
@@ -68,10 +80,18 @@ $this->title = 'Галерея';
                     }
                 }
                 ?>
-                    <a class="picture" href="<?= $image->getImagePath() ?>">
+
+                <div class="picture">
+                    <a href="<?= $image->getImagePath() ?>">
                         <img class="image-thumbnail" src="<?= $image->getThumbPath() //TODO Убрать вызов модели из вьюхи ?>" alt="<?= $image->description ?>">
                         <span class="badge rating"><?= round($image->average, 1) ?></span>
+                        <?php if (!Yii::$app->user->isGuest && false): ?>
+                            <div class="raty" data-rating="<?= $image->average ?>" data-userrate="<?= $userRate ?>" data-id="<?= $image->id ?>"></div>
+                        <?php endif;?>
                     </a>
+
+                </div>
+
             <?php endforeach; ?>
         </div>
         <div class="row">
